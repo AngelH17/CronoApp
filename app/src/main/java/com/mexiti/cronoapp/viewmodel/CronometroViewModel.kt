@@ -1,0 +1,85 @@
+package com.mexiti.cronoapp.viewmodel
+
+import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.mexiti.cronoapp.repository.CronosRepository
+import com.mexiti.cronoapp.state.CronoState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+
+@HiltViewModel
+class CronometroViewModel@Inject constructor(
+    private val repository: CronosRepository) : ViewModel() {
+
+    var state by mutableStateOf(CronoState())
+        private set
+    var cronoJob by mutableStateOf<Job?>(null)
+        private set
+    var time by mutableStateOf(0L)
+        private set
+
+    fun getCronoById(id: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getCronosById(id).collect {
+                item ->
+                if (item != null) {
+                    time = item.crono
+                    state = state.copy(titlle = item.title)
+                } else {
+                    Log.d("Error", "El objeto crono es nulo")
+                }
+            }
+        }
+    }
+
+    fun onValue(Value: String) {
+        state = state.copy(titlle = Value)
+    }
+    fun iniciar(){
+        state = state.copy(
+            cronometroActivo = true
+        )
+    }
+    fun pausar(){
+        state = state.copy(
+            cronometroActivo = false,
+            showSaveButton = true
+        )
+    }
+    fun detener(){
+        cronoJob?.cancel()
+        time = 0
+        state = state.copy(
+            cronometroActivo = false,
+            showSaveButton = false,
+            showShowTextField = false
+        )
+    }
+    fun showTextField(){
+        state = state.copy(
+            showShowTextField = true
+        )
+    }
+    fun cronos(){
+        if(state.cronometroActivo){
+            cronoJob?.cancel()
+            cronoJob = viewModelScope.launch {
+                while(true) {
+                    delay(50)
+                    time += 1
+                }
+            }
+        }else {
+        cronoJob?.cancel()
+        }
+    }
+}
