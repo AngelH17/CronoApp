@@ -24,7 +24,6 @@ import com.mexiti.cronoapp.R
 
 /* This file contain components of App that show important information. */
 
-@Composable
 fun formatTiempo(time: Long): String{
     val segundos = time % 60
     val minutos = (time / 60) % 60

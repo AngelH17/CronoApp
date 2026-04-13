@@ -33,7 +33,7 @@ class CronometroViewModel@Inject constructor(
                 item ->
                 if (item != null) {
                     time = item.crono
-                    state = state.copy(titlle = item.title)
+                    state = state.copy(title = item.title)
                 } else {
                     Log.d("Error", "El objeto crono es nulo")
                 }
@@ -42,7 +42,7 @@ class CronometroViewModel@Inject constructor(
     }
 
     fun onValue(Value: String) {
-        state = state.copy(titlle = Value)
+        state = state.copy(title = Value)
     }
     fun iniciar(){
         state = state.copy(

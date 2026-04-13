@@ -29,7 +29,7 @@ import com.mexiti.cronoapp.ui.components.MainTitle
 import com.mexiti.cronoapp.ui.components.formatTiempo
 import com.mexiti.cronoapp.viewmodel.DataViewModel
 import me.saket.swipe.SwipeAction
-import me.saket.swipe.SwipeableActionBox
+import me.saket.swipe.SwipeableActionsBox
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,10 +63,10 @@ fun ContentHomeView(it: PaddingValues,
     Column(
         modifier = Modifier.padding(it)
     ) {
-        val dataList by dataVM.cronoList.collectAsState()
+        val dataList by dataVM.cronosList.collectAsState()
         LazyColumn{
 
-            item(dataList){
+            items(dataList){
                 item->
                 val delete = SwipeAction(
                     icon = rememberVectorPainter(Icons.Default.Delete),
@@ -75,11 +75,11 @@ fun ContentHomeView(it: PaddingValues,
                         dataVM.deleteCrono(item)
                     }
                 )
-                SwipeableActionBox(
+                SwipeableActionsBox(
                     startActions = listOf(delete),
                     swipeThreshold = 150.dp
                 ){
-                    CronoCard(title = item.title,
+                    CronCard(title = item.title,
                         crono = formatTiempo(time = item.crono))
                     {
                         navController.navigate("EditView/${item.id}")
