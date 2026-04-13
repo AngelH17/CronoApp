@@ -1,6 +1,5 @@
 package com.mexiti.cronoapp.ui.views
 
-import android.widget.Button
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,6 +32,7 @@ import com.mexiti.cronoapp.ui.components.CircleButton
 import com.mexiti.cronoapp.ui.components.MainIconButton
 import com.mexiti.cronoapp.ui.components.MainTextField
 import com.mexiti.cronoapp.ui.components.MainTitle
+import com.mexiti.cronoapp.ui.components.formatTiempo
 import com.mexiti.cronoapp.viewmodel.CronometroViewModel
 import com.mexiti.cronoapp.viewmodel.DataViewModel
 
@@ -59,7 +59,7 @@ fun ContentAddView(it:PaddingValues,
         Row(horizontalArrangement = Arrangement.Center,
             modifier = Modifier.padding(vertical = 16.dp)
             ) {
-            CircleButton(icon = painterResource(id = R.drawable.play_arrow_24)
+            CircleButton(icon = painterResource(id = R.drawable.play_arrow_24),
                     //Enable Cronom State
                 !state.cronometroActivo
             ) {

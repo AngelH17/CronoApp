@@ -69,6 +69,8 @@ dependencies {
     val nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
+    implementation("me.saket.swipe:swipe:1.1.1")
+
 
 
     implementation("androidx.core:core-ktx:1.12.0")
